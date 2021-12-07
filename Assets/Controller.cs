@@ -50,7 +50,14 @@ public class Controller : MonoBehaviour
 
         while (true)
         {
-            var subRankPrev = GetSubRank(prevRank, made.Length) ?? RANK_MIN - 1;
+            // a만으로 이루어진 놈은 절대 등장해선 안된다.
+            // a만으로 이루어진 놈보다 작은 놈을 절대로 새로 만들 수 없기 때문.
+            // 예) aa가 이미 있고, aaa보다 작은 놈을 만들어야 한다 -> 어떻게 할 건데?
+            // 끝자리가 z인 놈은 만들어도 된다.
+            // 끝자리가 z인 놈보다 크게 만들고 싶으면, 자리를 새로 파버리면 되기 때문.
+            // 예) zzz보다 큰 놈을 만들어야 하면? zzzn을 만들어버리면 끝
+
+            var subRankPrev = GetSubRank(prevRank, made.Length) ?? RANK_MIN;
             var subRankNext = GetSubRank(nextRank, made.Length) ?? RANK_MAX + 1;
 
             if ((subRankPrev + subRankNext) / 2 != subRankPrev)
